@@ -4,4 +4,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="Grid">Show as Grid</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="google_map_key">AIzaSyCS7cQCMC2Pd4nnJ-cYJc2t6GNynFsbVdA</string>
 </resources>

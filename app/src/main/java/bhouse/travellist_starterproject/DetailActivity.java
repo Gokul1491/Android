@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Animatable;
@@ -34,9 +35,9 @@ public class DetailActivity extends Activity implements View.OnClickListener {
   public static final String EXTRA_PARAM_ID = "place_id";
   private ListView mList;
   private ImageView mImageView;
-  private TextView mTitle;
+  private TextView mTitle, mDescirption;
   private LinearLayout mTitleHolder,mRevealView;
-  private ImageButton mAddButton;
+  private ImageButton mAddButton,mAddButton1;
   private EditText mEditTextTodo;
   private boolean isEditTextVisible;
   private InputMethodManager mInputManager;
@@ -60,12 +61,14 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     mTitle = (TextView) findViewById(R.id.textView);
     mTitleHolder = (LinearLayout) findViewById(R.id.placeNameHolder);
     mAddButton = (ImageButton) findViewById(R.id.btn_add);
+    mDescirption = findViewById(R.id.descriptionTemple);
     mRevealView = (LinearLayout) findViewById(R.id.llEditTextHolder);
    // mEditTextTodo = (EditText) findViewById(R.id.etTodo);
       // this is for adding the music
                 /*MediaPlayer mp = MediaPlayer.create(this,R.raw.rajali);
                 mp.start();*/
     mAddButton.setOnClickListener(this);
+
     defaultColor = getResources().getColor(R.color.primary_dark);
 
     mInputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -74,7 +77,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
 
    // setUpAdapter();
     loadPlace();
-  //  windowTransition();
+    windowTransition();
     getPhoto();
   }
 
@@ -87,6 +90,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
   private void loadPlace() {
     mTitle.setText(mPlace.name);
     mImageView.setImageResource(mPlace.getImageResourceId(this));
+    mDescirption.setText(mPlace.templeDescription);
   }
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -126,6 +130,9 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     switch (v.getId()) {
       case R.id.btn_add:
         Animatable mAnimatable;
+
+        Intent intent= new Intent(DetailActivity.this,MapsActivity.class);
+        startActivity(intent);
         /*if (!isEditTextVisible) {
         //  revealEditText(mRevealView);
         //  mEditTextTodo.requestFocus();

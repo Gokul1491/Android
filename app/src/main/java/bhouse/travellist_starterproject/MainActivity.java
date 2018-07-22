@@ -3,6 +3,7 @@ package bhouse.travellist_starterproject;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -56,12 +57,13 @@ public class MainActivity extends Activity {
         // 2
         View navigationBar = findViewById(android.R.id.navigationBarBackground);
         View statusBar = findViewById(android.R.id.statusBarBackground);
-
+         // holds the image
         Pair<View, String> imagePair = Pair.create((View) placeImage, "tImage");
         Pair<View, String> holderPair = Pair.create((View) placeNameHolder, "tNameHolder");
-        // 3
+        // 3 it is way down at the end of the screen back , circle and square.
         Pair<View, String> navPair = Pair.create(navigationBar,
                 Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+        //is the place where your wifi, network and battery
         Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
         Pair<View, String> toolbarPair = Pair.create((View)toolbar, "tActionBar");
         // 4

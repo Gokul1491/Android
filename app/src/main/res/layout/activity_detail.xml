@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/placeImage"
+        android:layout_width="@dimen/card_corner_radius"
+        android:layout_height="@dimen/card_corner_radius"
+        android:layout_marginTop="0dp"
+        android:scaleType="centerCrop"
+        android:transitionName="tImage"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/placeImage"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-
-            android:scaleType="centerCrop"
-            android:transitionName="tImage" />
-
-        <LinearLayout
-            android:id="@+id/llEditTextHolder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#95000000"
-            android:orientation="horizontal">
-
-            <!--<EditText
-                android:id="@+id/etTodo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:textColor="@android:color/white" />-->
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="231dp">
 
         <LinearLayout
             android:id="@+id/placeNameHolder"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@color/primary_dark"
-            android:transitionName="tNameHolder">
+            android:transitionName="tNameHolder"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="231dp">
 
             <TextView
                 android:id="@+id/textView"
@@ -80,22 +71,18 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="-10dp"
+        android:layout_marginStart="15dp"
         android:text="INFORMATION"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="297dp" />
 
 
-    <!--<ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:requiresFadingEdge="vertical">
 
-
-    </ListView>
--->
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

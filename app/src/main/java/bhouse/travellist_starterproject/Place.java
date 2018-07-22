@@ -6,6 +6,7 @@ public class Place {
 
   public String name;
   public String imageName;
+  public String templeDescription;
   public boolean isFav;
 
   public int getImageResourceId(Context context) {
