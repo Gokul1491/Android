@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.flaviofaria.kenburnsview.KenBurnsView;
+
 
 public class MainActivity extends Activity {
 
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
         // 1
         Intent transitionIntent = new Intent(MainActivity.this, DetailActivity.class);
         transitionIntent.putExtra(DetailActivity.EXTRA_PARAM_ID, position);
-        ImageView placeImage = (ImageView) v.findViewById(R.id.placeImage);
+        KenBurnsView placeImage = (KenBurnsView) v.findViewById(R.id.placeImage);
         LinearLayout placeNameHolder = (LinearLayout) v.findViewById(R.id.placeNameHolder);
         // 2
         View navigationBar = findViewById(android.R.id.navigationBarBackground);

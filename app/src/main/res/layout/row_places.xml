@@ -9,7 +9,7 @@
     card_view:cardCornerRadius="@dimen/card_corner_radius"
     card_view:cardElevation="@dimen/card_elevation">
 
-    <ImageView
+    <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/placeImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -40,6 +40,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="left"
             android:paddingLeft="10dp"
+            android:textSize="20dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
 

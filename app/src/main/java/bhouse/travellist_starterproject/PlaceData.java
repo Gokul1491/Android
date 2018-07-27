@@ -5,12 +5,19 @@ import java.util.ArrayList;
 public class PlaceData {
 
     public static String[] placeNameArray = {"Sri Ramakrishna",
-            "Ashtalakshmi", "Tirupathi", "Kapalishwar"};
+            "Ashtalakshmi", "Tirupathi", "Kapalishwar",
+            "Parthasarathy",
+    "Vadapalani",
+    "Kaligambaltemple",
+    "Iskcon"};
 
     public static String[] descriptionArray = {"Ramakrishna Math is a monastic organisation for men brought into existence by Ramakrishna a 19th-century saint of Bengal.",
             "The Ashtalakshmi Kovil is a Hindu temple, which lies on the shorelines near the Elliot's beach, in Chennai, India. The temple is dedicated to the goddess Lakshmi, and her eight primary forms – the Ashtalakshmi – the giver of all eight forms of wealth, namely, offspring, success, prosperity, wealth, courage, bravery, food, and knowledge.",
             "Tirupathi",
-            "Kapalishwar"};
+            "Kapalishwar","Parthasarathy",
+            "Vadapalani",
+            "Kaligambaltemple",
+            "Iskcon"};
 
     public static ArrayList<Place> placeList() {
         ArrayList<Place> list = new ArrayList<>();

@@ -62,7 +62,7 @@
             android:background="@drawable/btn_background"
             android:contentDescription="@null"
             android:elevation="@dimen/button_elevation"
-            app:srcCompat="@drawable/ic_share_black_24dp" />
+            app:srcCompat="@drawable/ic_action_map" />
 
         <include
             android:id="@+id/toolbar"
