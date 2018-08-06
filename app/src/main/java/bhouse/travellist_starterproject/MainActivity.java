@@ -23,7 +23,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.flaviofaria.kenburnsview.KenBurnsView;
-
+import android.util.Log;
 
 public class MainActivity extends Activity {
 

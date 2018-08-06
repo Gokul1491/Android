@@ -2,88 +2,102 @@ package bhouse.travellist_starterproject;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.flaviofaria.kenburnsview.KenBurnsView;
-import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 
 import java.util.ArrayList;
 
-public class DetailActivity extends Activity implements View.OnClickListener {
+public class DetailActivity extends AppCompatActivity {
 
-  public static final String EXTRA_PARAM_ID = "place_id";
-  private ListView mList;
-  private ImageView mImageView;
-  private TextView mTitle, mDescirption;
-  private LinearLayout mTitleHolder,mRevealView;
-  private ImageButton mAddButton,mAddButton1;
-  private EditText mEditTextTodo;
-  private boolean isEditTextVisible;
-  private InputMethodManager mInputManager;
-  private Place mPlace;
-  private ArrayList<String> mTodoList;
-  private ArrayAdapter mToDoAdapter;
-  int defaultColor;
+    public static final String EXTRA_PARAM_ID = "place_id";
+    private ImageView mImageView;
+    private TextView mHistory, mDescirption, mTiminigs;
+    private LinearLayout mTitleHolder, mRevealView;
+    private ImageButton mAddButton, mAddButton1;
+    private Place mPlace;
+    private ArrayList<String> mTodoList;
+    private ArrayAdapter mToDoAdapter;
+    private RecyclerView dRecyclerView;
 
+   // private DetailListAdapter dAdapter;
+    public static final String DETAIL_TAG = "DETAIL_ACTIVITY";
+    private ArrayList<PlaceInformation> dList = new ArrayList<>();
+    private CollapsingToolbarLayout collapsingToolbarLayout = null;
 
-
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_detail);
-
-    mPlace = PlaceData.placeList().get(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
-
-    //mList = (ListView) findViewById(R.id.list);
-    mImageView = (ImageView) findViewById(R.id.placeImage);
-    mTitle = (TextView) findViewById(R.id.textView);
-    mTitleHolder = (LinearLayout) findViewById(R.id.placeNameHolder);
-    mAddButton = (ImageButton) findViewById(R.id.btn_add);
-    mDescirption = findViewById(R.id.descriptionTemple);
-    mRevealView = (LinearLayout) findViewById(R.id.llEditTextHolder);
-   // mEditTextTodo = (EditText) findViewById(R.id.etTodo);
-      // this is for adding the music
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        Log.d(DETAIL_TAG, "Start of an onCreateViewHolder");
+        setTheme(R.style.DetailActivity);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.test);
+        mPlace = PlaceData.placeList().get(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.colapse_layout);
+        mImageView = (ImageView) findViewById(R.id.placeImage1);
+        mHistory = (TextView) findViewById(R.id.historyTV);
+        mDescirption = (TextView) findViewById(R.id.descriptionTV);
+        mTiminigs = (TextView) findViewById(R.id.timingsTV);
+        //     dRecyclerView = (RecyclerView) findViewById(R.id.dList);
+        //    dRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //   dAdapter = new DetailListAdapter(this,dList);
+        //   mRevealView = (LinearLayout) findViewById(R.id.llEditTextHolder);
+        // mEditTextTodo = (EditText) findViewById(R.id.etTodo);
+        // this is for adding the music
                 /*MediaPlayer mp = MediaPlayer.create(this,R.raw.rajali);
                 mp.start();*/
-    mAddButton.setOnClickListener(this);
+       // mAddButton =(ImageButton) findViewById(R.id.btn_add1);
+       //   mAddButton.setOnClickListener((View.OnClickListener) this);
+        //dAdapter = new DetailListAdapter(this,dList);
+        // dRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //  dRecyclerView.setAdapter(dAdapter);
+        //  dRecyclerView.setAdapter(dAdapter);
+     //   defaultColor = getResources().getColor(R.color.primary_dark);
 
-    defaultColor = getResources().getColor(R.color.primary_dark);
+        //   mInputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //    mRevealView.setVisibility(View.INVISIBLE);
+        //isEditTextVisible = false;
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.fab:
+                        Intent intent = new Intent(DetailActivity.this, MapsActivity.class);
+                        startActivity(intent);
+                }
+            }
+        });
+        // setUpAdapter();
+        loadPlace();
+        //  windowTransition();
+        //getPhoto();
+    }
 
-    mInputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    mRevealView.setVisibility(View.INVISIBLE);
-    isEditTextVisible = false;
-
-   // setUpAdapter();
-    loadPlace();
-    windowTransition();
-    getPhoto();
-  }
 
   /*private void setUpAdapter() {
     mTodoList = new ArrayList<>();
@@ -91,53 +105,69 @@ public class DetailActivity extends Activity implements View.OnClickListener {
     mList.setAdapter(mToDoAdapter);
   }*/
 
-  private void loadPlace() {
-    mTitle.setText(mPlace.name);
-    mImageView.setImageResource(mPlace.getImageResourceId(this));
-    mDescirption.setText(mPlace.templeDescription);
-  }
+    private void loadPlace() {
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  private void windowTransition() {
-    getWindow().getEnterTransition().addListener(new TransitionAdapter() {
-      @Override
-      public void onTransitionEnd(Transition transition) {
-        mAddButton.animate().alpha(1.0f);
-        getWindow().getEnterTransition().removeListener(this);
-      }
-    });
-  }
+        collapsingToolbarLayout.setTitle(mPlace.name);
+        collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.collapsedappbar);
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.expandedappbar);
+        mImageView.setImageResource(mPlace.getImageResourceId(this));
 
-  private void addToDo(String todo) {
-    mTodoList.add(todo);
-  }
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mPlace.getImageResourceId(this));
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
 
-  private void getPhoto() {
-    Bitmap photo = BitmapFactory.decodeResource(getResources(), mPlace.getImageResourceId(this));
-    colorize(photo);
-  }
+            @Override
+            public void onGenerated(Palette palette) {
+                collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(R.attr.colorPrimary));
+                collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedColor(R.attr.colorPrimaryDark));
+            }
+        });
+        mHistory.setText(mPlace.templeHistory);
+        mDescirption.setText(mPlace.templeDescription);
+        mTiminigs.setText(mPlace.templeTimings);
 
-  private void colorize(Bitmap photo) {
-    Palette mPalette = Palette.generate(photo);
-    applyPalette(mPalette);
-  }
+    }
 
-  private void applyPalette(Palette mPalette) {
-    getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColor)));
-    mTitleHolder.setBackgroundColor(mPalette.getMutedColor(defaultColor));
-    mRevealView.setBackgroundColor(mPalette.getLightVibrantColor(defaultColor));
-  }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void windowTransition() {
+        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                mAddButton.animate().alpha(1.0f);
+                getWindow().getEnterTransition().removeListener(this);
+            }
+        });
+    }
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  @Override
-  public void onClick(View v) {
-    switch (v.getId()) {
-      case R.id.btn_add:
-        Animatable mAnimatable;
+    private void addToDo(String todo) {
+        mTodoList.add(todo);
+    }
 
-        Intent intent= new Intent(DetailActivity.this,MapsActivity.class);
-        startActivity(intent);
-        /*if (!isEditTextVisible) {
+    /*private void getPhoto() {
+        Bitmap photo = BitmapFactory.decodeResource(getResources(), mPlace.getImageResourceId(this));
+        colorize(photo);
+    }
+
+    private void colorize(Bitmap photo) {
+        Palette mPalette = Palette.generate(photo);
+        applyPalette(mPalette);
+    }
+
+    private void applyPalette(Palette mPalette) {
+        getWindow().setBackgroundDrawable(new ColorDrawable(mPalette.getDarkMutedColor(defaultColor)));
+        // mTitleHolder.setBackgroundColor(mPalette.getMutedColor(defaultColor));
+        // mRevealView.setBackgroundColor(mPalette.getLightVibrantColor(defaultColor));
+    }
+*/
+    /* @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+     @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_add1:
+
+
+                Intent intent = new Intent(DetailActivity.this, MapsActivity.class);
+                startActivity(intent);
+        //*if (!isEditTextVisible) {
         //  revealEditText(mRevealView);
         //  mEditTextTodo.requestFocus();
         //  mInputManager.showSoftInput(mEditTextTodo, InputMethodManager.SHOW_IMPLICIT);
@@ -145,70 +175,65 @@ public class DetailActivity extends Activity implements View.OnClickListener {
         //  mAnimatable = (Animatable) (mAddButton).getDrawable();
         //  mAnimatable.start();
 
-        } else {
-        //  addToDo(mEditTextTodo.getText().toString());
-          mToDoAdapter.notifyDataSetChanged();
-       //   mInputManager.hideSoftInputFromWindow(mEditTextTodo.getWindowToken(), 0);
-        //  hideEditText(mRevealView);
-       //   mAddButton.setImageResource(R.drawable.icon_morph_reverse);
-       //   mAnimatable = (Animatable) (mAddButton).getDrawable();
-       //   mAnimatable.start();
 
-        }*/
+        }
     }
-  }
+*/
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  private void revealEditText(LinearLayout view) {
 
-    int cx = view.getRight() - 30;
-    int cy = view.getBottom() - 60;
-    int finalRadius = Math.max(view.getWidth(), view.getHeight());
-    Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
-    view.setVisibility(View.VISIBLE);
-    isEditTextVisible = true;
-    anim.start();
-  }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void revealEditText(LinearLayout view) {
 
-  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-  private void hideEditText(final LinearLayout view) {
-    int cx = view.getRight() - 30;
-    int cy = view.getBottom() - 60;
-    int initialRadius = view.getWidth();
-    Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
-    anim.addListener(new AnimatorListenerAdapter() {
-      @Override
-      public void onAnimationEnd(Animator animation) {
-        super.onAnimationEnd(animation);
-        view.setVisibility(View.INVISIBLE);
-      }
-    });
-    isEditTextVisible = false;
-    anim.start();
-  }
+        int cx = view.getRight() - 30;
+        int cy = view.getBottom() - 60;
+        int finalRadius = Math.max(view.getWidth(), view.getHeight());
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        view.setVisibility(View.VISIBLE);
+        //isEditTextVisible = true;
+        anim.start();
+    }
 
-  @Override
-  public void onBackPressed() {
-    AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
-    alphaAnimation.setDuration(50);
-    mAddButton.startAnimation(alphaAnimation);
-    alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
-      @Override
-      public void onAnimationStart(Animation animation) {
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void hideEditText(final LinearLayout view) {
+        int cx = view.getRight() - 30;
+        int cy = view.getBottom() - 60;
+        int initialRadius = view.getWidth();
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, 0);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                view.setVisibility(View.INVISIBLE);
+            }
+        });
+        //  isEditTextVisible = false;
+        anim.start();
+    }
 
-      }
+    @Override
+    public void onBackPressed() {
+      finish();
+      /*    AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
+        alphaAnimation.setDuration(50);
+        mAddButton.startAnimation(alphaAnimation);
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
-      @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-      @Override
-      public void onAnimationEnd(Animation animation) {
-        mAddButton.setVisibility(View.GONE);
-        finishAfterTransition();
-      }
+            }
 
-      @Override
-      public void onAnimationRepeat(Animation animation) {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mAddButton.setVisibility(View.GONE);
+                finishAfterTransition();
+            }
 
-      }
-    });
-  }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }*/
+    }
 }

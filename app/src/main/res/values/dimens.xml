@@ -5,5 +5,6 @@
   <dimen name="button_elevation">3dp</dimen>
   <dimen name="button_press_elevation">18dp</dimen>
   <dimen name="card_elevation">15dp</dimen>
+  <dimen name="card_elevation_activity_list">5dp</dimen>
   <dimen name="card_corner_radius">5dp</dimen>
 </resources>
