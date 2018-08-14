@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -40,7 +41,7 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
         public LinearLayout placeHolder;
         public LinearLayout placeNameHolder;
         public TextView placeName;
-        public ImageView placeImage;
+        public KenBurnsView placeImage;
 
 
         public ViewHolder(View itemView) {
@@ -48,7 +49,7 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
             placeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             placeName = (TextView) itemView.findViewById(R.id.placeName);
             placeNameHolder = (LinearLayout) itemView.findViewById(R.id.placeNameHolder);
-            placeImage = (ImageView) itemView.findViewById(R.id.placeImage);
+            placeImage = (KenBurnsView) itemView.findViewById(R.id.placeImage);
             placeHolder.setOnClickListener(this);
         }
 
@@ -64,7 +65,6 @@ public class TravelListAdapter extends RecyclerView.Adapter<TravelListAdapter.Vi
     // 1
     @Override
     public int getItemCount() {
-        Log.d("Travallist", new PlaceData().placeList().toString());
         return new PlaceData().placeList().size();
     }
 

@@ -7,4 +7,8 @@
   <dimen name="card_elevation">15dp</dimen>
   <dimen name="card_elevation_activity_list">5dp</dimen>
   <dimen name="card_corner_radius">5dp</dimen>
+
+
+    <dimen name="card_elevation_holder">3dp</dimen>
+    <dimen name="card_corner_radius1">5dp</dimen>
 </resources>

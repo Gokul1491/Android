@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -19,18 +22,21 @@ import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flaviofaria.kenburnsview.KenBurnsView;
+
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_PARAM_ID = "place_id";
-    private ImageView mImageView;
+    private ImageView mImageView, mShareView;
     private TextView mHistory, mDescirption, mTiminigs;
     private LinearLayout mTitleHolder, mRevealView;
     private ImageButton mAddButton, mAddButton1;
@@ -38,7 +44,7 @@ public class DetailActivity extends AppCompatActivity {
     private ArrayList<String> mTodoList;
     private ArrayAdapter mToDoAdapter;
     private RecyclerView dRecyclerView;
-
+    public TravelListAdapter mAdapter;
    // private DetailListAdapter dAdapter;
     public static final String DETAIL_TAG = "DETAIL_ACTIVITY";
     private ArrayList<PlaceInformation> dList = new ArrayList<>();
@@ -52,13 +58,15 @@ public class DetailActivity extends AppCompatActivity {
         setTheme(R.style.DetailActivity);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
-        mPlace = PlaceData.placeList().get(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
+                // using bundle to retrieve the data from main activitty
+                mPlace = PlaceData.placeList().get(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.colapse_layout);
         mImageView = (ImageView) findViewById(R.id.placeImage1);
+        mShareView = (ImageView) findViewById(R.id.shareImage);
         mHistory = (TextView) findViewById(R.id.historyTV);
         mDescirption = (TextView) findViewById(R.id.descriptionTV);
         mTiminigs = (TextView) findViewById(R.id.timingsTV);
