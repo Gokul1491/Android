@@ -30,12 +30,14 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
 
     private static final String TAG = "MapActivity";
-
+    public static final String TEMPLE_NAME = "temple_id";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
@@ -52,13 +54,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
 
+    static Map<Integer, LatLng> map = new HashMap<>();
+    static LatLng ramakrishna = new LatLng(13.031388, 80.267303);
+    static LatLng ashtalasksmi = new LatLng(12.992853, 80.270470);
+    static LatLng kapalishwar = new LatLng(13.033977, 80.269896);
+    static LatLng Parthasarathy = new LatLng(13.054293, 80.276528);
+    static LatLng Vadapalani = new LatLng(13.053145, 80.213521);
+    static LatLng Kaligambaltemple = new LatLng(13.094655, 80.289110);
+    static LatLng Iskcon = new LatLng(12.906496, 80.241815);
+
+    static {
+        map.put(0, ramakrishna);
+        map.put(1, ashtalasksmi);
+        map.put(2, kapalishwar);
+        map.put(3, Parthasarathy);
+        map.put(4, Vadapalani);
+        map.put(5, Kaligambaltemple);
+        map.put(6, Iskcon);
+
+    }
+
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
-
+        final int val = (int) getIntent().getSerializableExtra(TEMPLE_NAME);
+        Log.d(TAG+"postion", String.valueOf(val));
         if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+            getDeviceLocation(val);
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
@@ -83,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private void sendRequest(String origin, String destination) {
+    private void sendRequest(LatLng origin, LatLng destination) {
 
         try {
 
@@ -141,7 +164,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("MAp actiivty", "before polyline options");
             PolylineOptions polylineOptions = new PolylineOptions().geodesic(true).
                     color(Color.BLUE).
-                    width(5);
+                    width(10);
 
 // mMap.addPolyline(new PolylineOptions().add(source,dest).width(10).color(Color.BLACK));
             for (int i = 0; i < route.points.size(); i++) {
@@ -153,7 +176,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private void getDeviceLocation() {
+    private void getDeviceLocation(final int val) {
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -170,9 +193,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Location currentLocation = (Location) task.getResult();
                             //13.092567, 80.260526
                             //     mMap.addMarker(new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title("My Location"));
-                            //  moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            //   moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
 
-                            getDestination(DEFAULT_ZOOM, new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            getDestination(DEFAULT_ZOOM, new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), val);
 
                         } else {
                             Log.d(TAG, "onComplete: current location is null");
@@ -187,7 +210,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
-        Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude);
+        Log.d(TAG, "Source: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
@@ -196,14 +219,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void getDestination(float zoom, LatLng source) {
-        LatLng dest = new LatLng(13.033977, 80.269896);
-        Log.d(TAG, "moveCamera: moving the camera to: lat: " + dest.latitude + ", lng: " + dest.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dest, zoom));
-        mMap.addMarker(new MarkerOptions()
-                .position(dest)
-                .title("Dest"));
-        sendRequest(source.toString(), dest.toString());
+    private void getDestination(float zoom, LatLng source ,int val) {
+       // LatLng dest = new LatLng(13.033977, 80.269896);
+        Log.d(TAG +"Destination:" , map.get(val).toString());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(map.get(val), zoom));
+       // mMap.addMarker(new MarkerOptions().position(map.get(val)).title("Dest"));
+        sendRequest(source, map.get(val));
         // mMap.addPolyline(new PolylineOptions().add(source,dest).width(10).color(Color.BLACK));
 
 

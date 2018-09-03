@@ -27,4 +27,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/primary_dark</item>
     </style>
+
+
+    <style name="MultipleImages" parent="Theme.AppCompat.DayNight.NoActionBar">
+    </style>
 </resources>

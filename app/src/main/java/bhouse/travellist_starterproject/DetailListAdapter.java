@@ -37,17 +37,17 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.De
     @Override
     public void onBindViewHolder(final DetailViewHolder holder, int position) {
 
-        final PlaceInformation place = new PlaceInformation().placeList().get(position);
-        holder.historyTV.setText(place.templeHistory);
+      //  final PlaceInformation place = new PlaceInformation().placeList().get(position);
+        /*holder.historyTV.setText(place.templeHistory);
         holder.descriptionTV.setText(place.templeDescription);
-        holder.timingsTV.setText(place.templeTimings);
+        holder.timingsTV.setText(place.templeTimings);*/
 
     }
 
     @Override
     public int getItemCount() {
-        return new PlaceInformation().placeList().size();
-
+     //   return new PlaceInformation().placeList().size();
+        return  0;
     }
 
     public class DetailViewHolder extends RecyclerView.ViewHolder {

@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_PARAM_ID = "place_id";
+    public static final String TEMPLE_NAME = "temple_id";
     private ImageView mImageView, mShareView;
     private TextView mHistory, mDescirption, mTiminigs;
     private LinearLayout mTitleHolder, mRevealView;
@@ -60,13 +62,15 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.test);
                 // using bundle to retrieve the data from main activitty
                 mPlace = PlaceData.placeList().get(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
+        final int val = (int) getIntent().getSerializableExtra(EXTRA_PARAM_ID);
+        Log.d(DETAIL_TAG+"postion", String.valueOf(val));
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.colapse_layout);
         mImageView = (ImageView) findViewById(R.id.placeImage1);
-        mShareView = (ImageView) findViewById(R.id.shareImage);
+       // mShareView = (ImageView) findViewById(R.id.shareImage);
         mHistory = (TextView) findViewById(R.id.historyTV);
         mDescirption = (TextView) findViewById(R.id.descriptionTV);
         mTiminigs = (TextView) findViewById(R.id.timingsTV);
@@ -89,14 +93,38 @@ public class DetailActivity extends AppCompatActivity {
         //   mInputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         //    mRevealView.setVisibility(View.INVISIBLE);
         //isEditTextVisible = false;
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.placeImage1:
+                      /*  int imageIds[] = {R.drawable.ashtalakshmi, R.drawable.parthasarathy, R.drawable.sriramakrishna, R.drawable.kapalishwar, R.drawable.kaligambaltemple};
+                        ArrayList<Integer> al = new ArrayList<>();
+                        al.add(R.drawable.sriramakrishna);
+                        al.add(R.drawable.ashtalakshmi);
+                        al.add(R.drawable.parthasarathy);
+                        al.add(R.drawable.vadapalani);
+                        al.add(R.drawable.kaligambaltemple);*/
+
+                        //  PlaceInformation pi = new PlaceInformation("Ashtalakshmi", {})
+                        Intent intent = new Intent(DetailActivity.this, MultipleImages.class);
+                        intent.putExtra(DetailActivity.TEMPLE_NAME, val);
+
+                       // ActivityCompat.startActivity(DetailActivity.this, intent );
+                        startActivity(intent);
+                }
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.fab:
-                        Intent intent = new Intent(DetailActivity.this, MapsActivity.class);
-                        startActivity(intent);
+                        Intent intentMap = new Intent(DetailActivity.this, MapsActivity.class);
+                        intentMap.putExtra(DetailActivity.TEMPLE_NAME, val);
+                        startActivity(intentMap);
                 }
             }
         });

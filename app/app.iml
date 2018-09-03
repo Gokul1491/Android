@@ -137,6 +137,7 @@
     <orderEntry type="library" name="Gradle: com.android.support:support-core-ui-26.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-26.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-solver:1.1.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.commit451:PhotoView-1.2.4" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-location-11.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:cardview-v7-26.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-tasks-11.0.2" level="project" />
